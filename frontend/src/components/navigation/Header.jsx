@@ -18,7 +18,7 @@ function Header() {
   }
 
   return (
-    <div className="border-b border-slate-100 bg-white sticky top-0 h-16">
+    <div className="border-b border-slate-100 bg-white sticky top-0 h-16 z-50">
       <div className="container flex flex-row items-center h-full px-4">
         {/* Side menu */}
         <SideMenu menuClick={menuClick} closeMenu={handleMenuClick} />

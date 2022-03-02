@@ -1,0 +1,12 @@
+button.custom-css-size-button:nth-child(4n) {
+    border-right: 1px solid rgb(209, 213, 219);
+}
+
+button.custom-css-size-button:last-child {
+    border-right: 1px solid rgb(209, 213, 219);
+}
+
+button.custom-css-size-button-selected {
+    border: 2px solid rgb(31, 41, 55);
+    border-right: 2px solid rgb(31, 41, 55);
+}

@@ -6,7 +6,11 @@ module.exports = {
     container: {
       center: true,
     },
-    extend: {},
+    extend: {
+      spacing: {
+        '18': '4.5rem',
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
