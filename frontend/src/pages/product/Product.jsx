@@ -66,7 +66,7 @@ function Product() {
         {/* Price */}
         <h2 className="text-xl font-semibold text-red-600">${Item.price}</h2>
 
-        {/* Size button */}
+        {/* Size button (Using custom css class in Product.css) */}
         <div className="w-full my-16 grid grid-cols-4"
         >
           {Object.entries(Item.size).map(([key, value]) => (

@@ -74,8 +74,8 @@ const NavCategoryList = [
 function SideMenu({ menuClick, closeMenu }) {
   return (
     <div className={
-      "fixed top-0 -left-full w-full h-full bg-white transition-all duration-500 delay-50"
-      + (menuClick && ' left-0')
+      "fixed top-0 w-full h-full bg-white transition-all duration-500 delay-50 "
+      + (menuClick === true ? " left-0" : " -left-full")
       + " lg:relative lg:left-0 lg:w-fit lg:h-fit lg:flex lg:flex-row lg:border-none"
     }>
       <div className="flex flex-col justify-center lg:block ">

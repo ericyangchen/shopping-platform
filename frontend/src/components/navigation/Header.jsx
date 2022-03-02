@@ -6,6 +6,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import SideMenu from './SideMenu';
+import SearchTab from './searchTab/SearchTab';
+import ShoppingCart from './shoppingCart/ShoppingCart';
+
 
 function Header() {
   // history
@@ -17,11 +20,28 @@ function Header() {
     setMenuClick(!menuClick);
   }
 
+  // Click open search tab
+  const [searchIconClick, setSearchIconClick] = useState(false);
+  const handleSearchIconClick = () => {
+    setSearchIconClick(!searchIconClick);
+  }
+
+  // Click open shopping cart
+  const [cartClick, setCartClick] = useState(false);
+  const handleCartClick = () => {
+    setCartClick(!cartClick);
+  }
+
   return (
-    <div className="border-b border-slate-100 bg-white sticky top-0 h-16 z-50">
+    <div className="border-b border-slate-100 bg-white sticky top-0 h-16 z-30">
       <div className="container flex flex-row items-center h-full px-4">
+        {/* hidden ecomponents */}
         {/* Side menu */}
         <SideMenu menuClick={menuClick} closeMenu={handleMenuClick} />
+        {/* Search tab */}
+        <SearchTab searchIconClick={searchIconClick} closeSearchTab={handleSearchIconClick} />
+        {/* Shopping Cart Component */}
+        <ShoppingCart cartClick={cartClick} closeCart={handleCartClick} />
 
         {/* Hamburger button */}
         <div className="flex-1 text-left lg:hidden" >
@@ -41,19 +61,13 @@ function Header() {
         {/* Right buttons */}
         <div className="flex-1 flex justify-end gap-2">
           {/* Search button */}
-          <button>
-            <SearchIcon color="primary" />
-          </button>
+          <SearchIcon color="primary" onClick={handleSearchIconClick} />
 
           {/* Account button */}
-          <button onClick={e => (navigate("/account"))}>
-            <PersonOutlineOutlinedIcon />
-          </button>
+          <PersonOutlineOutlinedIcon onClick={e => (navigate("/account"))} />
 
           {/* Shopping Bag button */}
-          <button onClick={e => (navigate("/shopping-cart"))}>
-            <ShoppingBagOutlinedIcon />
-          </button>
+          <ShoppingBagOutlinedIcon onClick={handleCartClick} />
         </div>
       </div>
     </div>
