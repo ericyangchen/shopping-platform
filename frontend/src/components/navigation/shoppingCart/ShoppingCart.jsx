@@ -66,7 +66,7 @@ function ShoppingCart({ cartClick, closeCart }) {
         {/* Shopping Cart Text */}
         <div className="border-b border-gray-300">
           <div className="container h-16 flex justify-center items-center">
-            <h1 className="text-lg font-bold" onClick={closeCart}>
+            <h1 className="text-lg font-bold">
               Your Cart
             </h1>
           </div>

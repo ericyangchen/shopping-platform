@@ -5,7 +5,7 @@ function SearchItem({ id, title, tag, src, closeSearchTab }) {
   return (
     <div className="my-8 flex flex-row gap-8">
       {/* Image */}
-      <div className="w-1/4"
+      <div className="w-1/4 lg:w-32 object-contain"
         onClick={closeSearchTab}
       >
         <Link to={"/products/" + id}>

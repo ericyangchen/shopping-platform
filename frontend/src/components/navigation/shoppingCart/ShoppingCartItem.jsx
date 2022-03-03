@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 function ShoppingCartItem({ id, title, price, size, quantity, src, closeCart }) {
   return (
-    <div className="my-8 flex flex-row gap-2">
+    <div className="my-8 flex flex-row gap-2 md:gap-4">
       {/* Image */}
-      <div className="w-1/4"
+      <div className="w-1/4 lg:w-32 object-contain"
         onClick={closeCart}
       >
         <Link to={"/products/" + id}>
@@ -16,7 +16,7 @@ function ShoppingCartItem({ id, title, price, size, quantity, src, closeCart }) 
       </div>
 
       {/* Item Details */}
-      <div className="flex-1 flex flex-col justify-between">
+      <div className="flex-1 flex flex-col justify-center gap-1 lg:gap-2">
         <p className="text-xs font-medium">{title}</p>
         <p className="text-xs font-semibold text-gray-400">{size}</p>
 

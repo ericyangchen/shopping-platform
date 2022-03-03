@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+import Backdrop from '@mui/material/Backdrop';
+
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -42,6 +44,13 @@ function Header() {
         <SearchTab searchIconClick={searchIconClick} closeSearchTab={handleSearchIconClick} />
         {/* Shopping Cart Component */}
         <ShoppingCart cartClick={cartClick} closeCart={handleCartClick} />
+
+        {/* Backdrop component */}
+        <Backdrop sx={{ color: '#fff', zIndex: 40 }}
+          open={cartClick}
+          transitionDuration={700}
+          onClick={() => (setCartClick(false))}
+        />
 
         {/* Hamburger button */}
         <div className="flex-1 text-left lg:hidden" >
