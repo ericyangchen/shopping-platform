@@ -98,7 +98,7 @@ function SideMenu({ menuClick, closeMenu }) {
         <div className="container">
           <ul className="flex flex-col px-4 lg:px-0 lg:flex-row lg:gap-8">
             {NavCategoryList.map(item => (
-              <Link to={item.link} key={item.id}>
+              <Link to={"/category" + item.link} key={item.id}>
                 <div className="flex justify-between items-center hover:bg-slate-100 rounded-md"
                   onClick={closeMenu}
                 >

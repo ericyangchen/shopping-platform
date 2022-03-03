@@ -36,7 +36,7 @@ const Item = {
 
 function Product() {
   // parmas to get the product id (params.productId) then fetch the product info
-  const params = useParams();
+  const { productId } = useParams();
 
   // selected size
   const [selectedSize, setSelectedSize] = useState("");

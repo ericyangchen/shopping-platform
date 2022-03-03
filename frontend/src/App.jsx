@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/navigation/Header';
 import Home from './pages/home/Home';
+import Category from './pages/category/Category';
 import Product from './pages/product/Product';
 import Account from './pages/account/Account';
 import Checkout from './pages/checkout/Checkout';
@@ -12,6 +13,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/category/:category" element={<Category />} />
           <Route path="/products/:productId" element={<Product />} />
           <Route path="/account" element={<Account />} />
           <Route path="/checkout" element={<Checkout />} />

@@ -64,7 +64,7 @@ function Header() {
           <SearchIcon color="primary" onClick={handleSearchIconClick} />
 
           {/* Account button */}
-          <PersonOutlineOutlinedIcon onClick={e => (navigate("/account"))} />
+          <PersonOutlineOutlinedIcon onClick={() => (navigate("/account"))} />
 
           {/* Shopping Bag button */}
           <ShoppingBagOutlinedIcon onClick={handleCartClick} />

@@ -1,5 +1,5 @@
 import './ShoppingCart.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ShoppingCartItem from "./ShoppingCartItem";
 
 const ShoppingCartItems = [
@@ -55,6 +55,7 @@ const ShoppingCartItems = [
 
 
 function ShoppingCart({ cartClick, closeCart }) {
+  const navigate = useNavigate();
   // Context API
 
   return (
@@ -138,6 +139,7 @@ function ShoppingCart({ cartClick, closeCart }) {
             + (!ShoppingCartItems.length && " opacity-30 ")
           }
             disabled={!ShoppingCartItems.length}
+            onClick={() => { closeCart(); navigate("/checkout"); }}
           >
             Checkout
           </button>

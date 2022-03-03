@@ -85,9 +85,8 @@ function SearchTab({ searchIconClick, closeSearchTab }) {
   }
 
   return (
-    <div className={"fixed z-50 left-0 w-full bg-white transition-all duration-500 delay-50 "
+    <div className={"fixed z-50 left-0 w-full h-full bg-white transition-all duration-500 delay-50 "
       + (searchIconClick === true ? " top-0 " : " -top-full ")
-      + (searchInput === "" ? " h-16 " : " h-full ")
     }>
       <div className="w-full flex flex-col justify-center">
         {/* Outer div for border */}
