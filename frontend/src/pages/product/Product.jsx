@@ -70,7 +70,7 @@ function Product() {
         <div className="w-full my-16 grid grid-cols-4"
         >
           {Object.entries(Item.size).map(([key, value]) => (
-            <button className={"py-2 mb-2 border border-r-0 border-gray-300 text-sm lg:hover:bg-gray-100 "
+            <button className={"py-3 mb-2 border border-r-0 border-gray-300 text-sm lg:hover:bg-gray-100 "
               + (value ? "text-black " : "text-gray-300 ")
               + (selectedSize === key ? "custom-css-size-button-selected font-bold " : "custom-css-size-button ")}
               key={key}
@@ -86,7 +86,7 @@ function Product() {
         {/* Add to cart (fixed at bottom on mobile) */}
         <div className="w-full px-4 p-4 fixed bottom-0 bg-white">
           <button className={"w-full h-14 p-4 rounded-xl text-center font-extrabold bg-gray-800 text-white "
-            + ((selectedSize === "") && "opacity-30 ")
+            + ((selectedSize === "") && "bg-gray-400")
           }
             disabled={selectedSize === ""}
             onClick={handleAddToCart}

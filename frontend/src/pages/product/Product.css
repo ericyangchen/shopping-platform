@@ -7,6 +7,6 @@ button.custom-css-size-button:last-child {
 }
 
 button.custom-css-size-button-selected {
-    border: 2px solid rgb(31, 41, 55);
-    border-right: 2px solid rgb(31, 41, 55);
+    border: 1.5px solid rgb(31, 41, 55);
+    border-right: 1.5px solid rgb(31, 41, 55);
 }
