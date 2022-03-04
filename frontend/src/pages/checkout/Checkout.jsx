@@ -66,7 +66,6 @@ function Checkout() {
   const [shippingToggle, setShippingToggle] = useState(true);
   const [paymentToggle, setPaymentToggle] = useState(true);
 
-
   // fetch info
 
   return (
@@ -108,6 +107,7 @@ function Checkout() {
           </div>
         </div>
 
+        {/* Outer div for desktop layout */}
         <div className="lg:flex lg:flex-col lg:gap-4 lg:col-start-1 lg:row-start-1 ">
           {/* Shipping info */}
           <div className="flex flex-col justify-center items-center border border-gray-300 rounded ">

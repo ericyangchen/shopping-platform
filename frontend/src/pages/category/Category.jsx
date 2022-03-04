@@ -122,7 +122,7 @@ function Category() {
         {/* Title */}
         <h1 className="text-2xl font-bold text-center">{CategoryResult.name}</h1>
         {/* Count */}
-        <h2 className="text-md font-medium text-center">{CategoryResult.count} products</h2>
+        <h2 className="text-base font-medium text-center">{CategoryResult.count} products</h2>
       </div>
 
       {/* CategoryResult List */}

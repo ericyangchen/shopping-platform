@@ -59,7 +59,7 @@ function ShoppingCart({ cartClick, closeCart }) {
   // Context API
 
   return (
-    <div className={"fixed z-50 top-0 w-22/25 h-full bg-white transition-all duration-500 delay-50 md:w-1/3 xl:w-1/4 "
+    <div className={"fixed z-50 top-0 w-22/25 h-full bg-white transition-all duration-500 delay-50 md:w-1/2 lg:w-2/5 xl:w-1/3 "
       + (cartClick === true ? " right-0" : " -right-full")
     }>
       <div className="flex flex-col justify-center">
@@ -112,7 +112,7 @@ function ShoppingCart({ cartClick, closeCart }) {
         </div>
 
         {/* Total Price info & Checkout button */}
-        <div className="w-22/25 h-80 p-4 fixed bottom-0 bg-white border-t border-gray-300 flex flex-col justify-between gap-4 overflow-scroll md:w-1/3 xl:w-1/4 ">
+        <div className="w-22/25 h-80 p-4 fixed bottom-0 bg-white border-t border-gray-300 flex flex-col justify-between gap-4 overflow-scroll md:w-1/2 lg:w-2/5 xl:w-1/3 ">
           {/* Free shipping info */}
           <div className="w-full p-4 bg-gray-100 rounded text-sm text-center text-black ">
             Spend $ 1000 more for <span className="font-bold">FREE SHIPPING</span>.

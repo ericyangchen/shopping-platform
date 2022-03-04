@@ -17,7 +17,7 @@ function ShoppingCartItem({ id, title, price, size, quantity, src, closeCart }) 
 
       {/* Item Details */}
       <div className="flex-1 flex flex-col justify-center gap-1 lg:gap-2">
-        <p className="text-xs font-medium">{title}</p>
+        <p className="text-xs font-medium md:text-base lg:text-lg ">{title}</p>
         <p className="text-xs font-semibold text-gray-400">{size}</p>
 
         {/* Quantity & Price */}
