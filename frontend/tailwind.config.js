@@ -13,6 +13,10 @@ module.exports = {
       width: {
         '22/25': '88%',
       },
+      screens: {
+        // customized media breakpoint for max-width: 1023px ( Used in Checkout.jsx for Order Summary ItemList)
+        'max-lg': {'max': '1023px'},
+      },
     },
   },
   plugins: [

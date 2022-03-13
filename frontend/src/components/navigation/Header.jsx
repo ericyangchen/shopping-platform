@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import Backdrop from '@mui/material/Backdrop';
-
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -11,10 +10,10 @@ import SideMenu from './SideMenu';
 import SearchTab from './searchTab/SearchTab';
 import ShoppingCart from './shoppingCart/ShoppingCart';
 
+import { useAuth } from '../../contexts/AuthContext';
+
 
 function Header() {
-  // history
-  const navigate = useNavigate();
 
   // Click open and close side menu (on mobile)
   const [menuClick, setMenuClick] = useState(false);
@@ -32,6 +31,17 @@ function Header() {
   const [cartClick, setCartClick] = useState(false);
   const handleCartClick = () => {
     setCartClick(!cartClick);
+  }
+
+  // click account button
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const handleAccountClick = () => {
+    if (!user) {
+      navigate("login");
+    } else {
+      navigate("/account");
+    }
   }
 
   return (
@@ -73,7 +83,7 @@ function Header() {
           <SearchIcon color="primary" onClick={handleSearchIconClick} />
 
           {/* Account button */}
-          <PersonOutlineOutlinedIcon onClick={() => (navigate("/account"))} />
+          <PersonOutlineOutlinedIcon onClick={handleAccountClick} />
 
           {/* Shopping Bag button */}
           <ShoppingBagOutlinedIcon onClick={handleCartClick} />

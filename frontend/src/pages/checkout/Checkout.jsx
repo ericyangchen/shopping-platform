@@ -62,7 +62,7 @@ const CheckoutInfo = {
 
 function Checkout() {
   // fot toggling
-  const [orderSummaryToggle, setOrderSummaryToggle] = useState(true);
+  const [orderSummaryToggle, setOrderSummaryToggle] = useState(false);
   const [shippingToggle, setShippingToggle] = useState(true);
   const [paymentToggle, setPaymentToggle] = useState(true);
 
@@ -87,8 +87,9 @@ function Checkout() {
           </div>
 
           {/* Item List */}
-          <div className={"w-full flex flex-col border-t border-gray-300 transition-all duration-500 delay-150 lg:border-0 "
-            + (!orderSummaryToggle && " h-0 overflow-hidden opacity-0 lg:h-fit lg:opacity-1 lg:transition-none")
+          {/* The max-lg is a customized media breakpoint for max-width: 1023px */}
+          <div className={"w-full flex flex-col border-t border-gray-300 transition-all duration-500 delay-150 lg:border-0 lg:opacity-1 lg:transition-none "
+            + (!orderSummaryToggle && " max-lg:h-0 max-lg:overflow-hidden max-lg:opacity-0 ")
           }>
             <ul className="flex flex-col px-4 divide-y">
               {ShoppingCartItems.map(item => (
@@ -108,7 +109,7 @@ function Checkout() {
         </div>
 
         {/* Outer div for desktop layout */}
-        <div className="lg:flex lg:flex-col lg:gap-4 lg:col-start-1 lg:row-start-1 ">
+        <div className="flex flex-col gap-4 lg:col-start-1 lg:row-start-1 ">
           {/* Shipping info */}
           <div className="flex flex-col justify-center items-center border border-gray-300 rounded ">
             {/* Shipping & close button */}
@@ -129,8 +130,10 @@ function Checkout() {
             }>
               <p className="px-4 pt-4">{CheckoutInfo.name}</p>
               <div className="w-full px-4 pb-4 flex flex-col gap-1">
-                {CheckoutInfo.shippingAddress.map(addressInfo => (
-                  <p>{addressInfo}</p>
+                {CheckoutInfo.shippingAddress.map((addressInfo, index) => (
+                  <p key={index}>
+                    {addressInfo}
+                  </p>
                 ))}
               </div>
             </div>

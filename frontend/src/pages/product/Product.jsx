@@ -70,7 +70,7 @@ function Product() {
         <div className="w-full my-16 grid grid-cols-4"
         >
           {Object.entries(Item.size).map(([key, value]) => (
-            <button className={"py-3 mb-2 border border-r-0 border-gray-300 text-sm lg:hover:bg-gray-100 "
+            <button className={"py-3 mb-2 border border-r-0 border-gray-300 text-sm "
               + (value ? "text-black " : "text-gray-300 ")
               + (selectedSize === key ? "custom-css-size-button-selected font-bold " : "custom-css-size-button ")}
               key={key}
