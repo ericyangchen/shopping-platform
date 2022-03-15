@@ -116,7 +116,6 @@ const LatestItemsList = [
     ],
   },
 ]
-
 const MensWearList = [
   {
     'id': '00000005',
@@ -262,8 +261,6 @@ function Home() {
           ))}
         </ul>
       </div>
-
-
 
     </div>
   )

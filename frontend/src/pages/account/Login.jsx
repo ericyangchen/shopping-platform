@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
-import { auth } from '../../firebase-config';
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 function Login() {
   // to navigate to login
@@ -12,36 +11,39 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  const { login } = useAuth();
   // login user
-  const handleLoginClick = (e) => {
+  const handleLoginClick = async (e) => {
     e.preventDefault();
     if (email === "") {
-      setError("Invalid Email!");
+      setError("Invalid Email !");
       return;
     }
     else if (password === "") {
-      setError("Invalid Password!");
+      setError("Invalid Password !");
       return;
     }
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const newUser = userCredential.user;
-        console.log("Successfully login user: ", newUser.email);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/invalid-email') {
-          setError("Invalid Email!");
-        } else if (errorCode === 'auth/wrong-password') {
-          setError("Wrong Password!");
-        } else if (errorCode === 'auth/user-not-found') {
-          setError("User Not Found!");
-        } else {
-          setError(errorCode);
-        }
-      });
+    setLoading(true);
+    try {
+      await login(email, password);
+      // go to account page
+    }
+    catch (error) {
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        setError("Invalid Email !");
+      } else if (errorCode === 'auth/wrong-password') {
+        setError("Wrong Password !");
+      } else if (errorCode === 'auth/user-not-found') {
+        setError("User Not Found !");
+      } else {
+        setError(errorCode);
+      }
+    }
+    setLoading(false);
   }
 
   // forget password
@@ -90,16 +92,17 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="w-fit self-end text-gray-400 text-sm"
+          <div className="w-fit self-end text-gray-400 text-sm"
             type="button"
             onClick={handleLoginForgetPassowrd}
           >
             Forget password?
-          </button>
+          </div>
           {/* Login button */}
           <button className="w-full py-2 text-white font-semibold bg-orange-500 rounded"
             type="submit"
             onClick={handleLoginClick}
+            disabled={loading}
           >
             Login
           </button>

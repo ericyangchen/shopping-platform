@@ -1,31 +1,28 @@
-import { auth } from '../../firebase-config';
-import { signOut } from 'firebase/auth';
-
 import { useAuth } from '../../contexts/AuthContext';
 
 function OverView() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
-  const handleSignOutClick = (e) => {
+  // logout button click
+  const handleLogOutClick = async (e) => {
     e.preventDefault();
-    signOut(auth)
-      .then(() => {
-        console.log('Firebase Sign out successfully')
-      })
-      .catch((error) => {
-        console.log('Firebase Sign out failed: ', error)
-      })
+    try {
+      await logout();
+      // go to login page
+    } catch (error) {
+      console.log('Firebase Sign out failed: ', error);
+    }
   }
-
 
   return (
     <div>
-      OverView
+      <p>{user?.email}</p>
+
       <button className="p-2 bg-black text-white text-sm rounded-md "
-        onClick={handleSignOutClick}>Sign out</button
+        onClick={handleLogOutClick}
       >
-      <p>---------Show the user account info---------</p>
-      {user?.email}
+        Sign out
+      </button>
     </div>
   )
 }

@@ -2,13 +2,19 @@ import { createContext, useContext, useEffect, useReducer } from 'react';
 import { reducer, ACTIONS } from './AuthReducer';
 
 import { auth } from '../firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  sendPasswordResetEmail
+} from 'firebase/auth';
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const useAuth = () => (useContext(AuthContext));
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   // state for auth
   const initialState = {
     user: null,
@@ -18,35 +24,44 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        addUser(currentUser);
+        dispatch({
+          type: ACTIONS.ADD_USER,
+          payload: currentUser,
+        })
         console.log("Add user => ", currentUser); 
       } else {
-        deleteUser();
+        dispatch({
+          type: ACTIONS.DELETE_USER,
+        })
         console.log("Delete user "); 
       }
     });
+    // return unsubscribe();
   }, []);
 
   // initialize reducer state and dispatch func.
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // functions to be used
-  const addUser = (user) => {
-    dispatch({
-      type: ACTIONS.ADD_USER,
-      payload: user,
-    })
+  const signup = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
   }
-  const deleteUser = () => {
-    dispatch({
-      type: ACTIONS.DELETE_USER,
-    })
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  }
+  const logout = () => {
+    return signOut(auth);
+  }
+  const resetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
   }
 
   const value = {
     user: state.user,
-    addUser,
-    deleteUser,
+    signup,
+    login,
+    logout,
+    resetPassword,
   }
   return (
     <AuthContext.Provider value={value}>
@@ -54,5 +69,3 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export default AuthProvider;

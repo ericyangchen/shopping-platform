@@ -13,12 +13,12 @@ const Tabs = [
     path: '/profile',
   },
   {
-    name: 'Orders',
-    path: '/orders',
+    name: 'Order',
+    path: '/order',
   },
   {
-    name: 'Payments',
-    path: '/payments',
+    name: 'Payment',
+    path: '/payment',
   },
 ]
 

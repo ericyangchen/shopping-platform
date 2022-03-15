@@ -1,47 +1,54 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
-import { auth } from '../../firebase-config';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function Register() {
   // to navigate to login
   const navigate = useNavigate();
 
   // input state & error msg 
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  const { signup } = useAuth();
   // register user
-  const handleRegisterClick = (e) => {
+  const handleRegisterClick = async (e) => {
     e.preventDefault();
-    if (registerEmail === "") {
-      setError("Invalid Email!");
+    if (email === "") {
+      setError("Invalid Email !");
       return;
     }
-    else if (registerPassword === "") {
-      setError("Invalid Password!");
+    else if (password === "") {
+      setError("Invalid Password !");
+      return;
+    }
+    else if (password !== passwordConfirm) {
+      setError("Passwords do not match !");
       return;
     }
 
-    createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
-      .then((userCredential) => {
-        const newUser = userCredential.user;
-        console.log(" Successfully registered user", newUser.email);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/invalid-email') {
-          setError("Invalid Email!");
-        } else if (errorCode === 'auth/email-already-in-use') {
-          setError("Email is already in use!");
-        } else if (errorCode === 'auth/weak-password') {
-          setError("Password must be at least 6 letters!");
-        } else {
-          setError(errorCode);
-        }
-      });
+    setLoading(true);
+    try {
+      await signup(email, password);
+      // go to account page
+    }
+    catch (error) {
+      const errorCode = error.code;
+      if (errorCode === 'auth/invalid-email') {
+        setError("Invalid Email !");
+      } else if (errorCode === 'auth/email-already-in-use') {
+        setError("Email is already in use !");
+      } else if (errorCode === 'auth/weak-password') {
+        setError("Password must be at least 6 letters !");
+      } else {
+        setError(errorCode);
+      }
+    }
+    setLoading(false);
   }
 
   // error message duration
@@ -76,19 +83,27 @@ function Register() {
           <input className="w-full px-4 py-2 border border-gray-300 rounded "
             type="email"
             placeholder="Email"
-            value={registerEmail}
-            onChange={(e) => setRegisterEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           {/* Password */}
           <input className="w-full px-4 py-2 border border-gray-300 rounded "
             type="password"
             placeholder="Password"
-            value={registerPassword}
-            onChange={(e) => setRegisterPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {/* Confirm Password */}
+          <input className="w-full px-4 py-2 border border-gray-300 rounded "
+            type="password"
+            placeholder="Confirm Password"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
           />
           {/* Register button */}
           <button className="w-full py-2 text-white font-bold bg-orange-500 rounded"
             onClick={handleRegisterClick}
+            disabled={loading}
           >
             Register
           </button>
@@ -115,7 +130,7 @@ function Register() {
         </div>
       </div >
 
-      {/* Create account button */}
+      {/* Signin account button */}
       < div className="mt-16 text-center flex flex-col gap-4 justify-center items-center " >
         {/* Sign Up */}
         < h1 className="text-sm text-gray-400" >

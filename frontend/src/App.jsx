@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 
 // utility component
 import Header from './components/navigation/Header';
@@ -10,7 +11,9 @@ import Category from './pages/category/Category';
 import Product from './pages/product/Product';
 import Account from './pages/account/Account';
 import OverView from './pages/account/OverView';
-import EditProfile from './pages/account/EditProfile';
+import Profile from './pages/account/Profile';
+import Order from './pages/account/Order';
+import Payment from './pages/account/Payment';
 import Login from './pages/account/Login';
 import Register from './pages/account/Register';
 import Checkout from './pages/checkout/Checkout';
@@ -18,8 +21,9 @@ import Checkout from './pages/checkout/Checkout';
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
+    <AuthProvider>
+      <Router>
+        {/* Header */}
         <Header />
         <Routes>
           {/* Home */}
@@ -38,7 +42,11 @@ function App() {
               {/* Overview */}
               <Route index element={<OverView />} />
               {/* Edit profile */}
-              <Route path="profile" element={<EditProfile />} />
+              <Route path="profile" element={<Profile />} />
+              {/* Order */}
+              <Route path="order" element={<Order />} />
+              {/* Payment */}
+              <Route path="payment" element={<Payment />} />
             </Route>
           </Route>
 
@@ -55,12 +63,10 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
 
           {/* No match, redirect to Home */}
-          <Route path="*"
-            element={<Navigate to="/" />}
-          />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </BrowserRouter >
-    </div >
+      </Router >
+    </AuthProvider >
   );
 }
 
