@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import { reducer, ACTIONS } from './AuthReducer';
 
-import { auth } from '../firebase-config';
+import { auth } from '../firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -28,12 +28,12 @@ export const AuthProvider = ({ children }) => {
           type: ACTIONS.ADD_USER,
           payload: currentUser,
         })
-        console.log("Add user => ", currentUser); 
+        console.log("signin user ", currentUser); 
       } else {
         dispatch({
           type: ACTIONS.DELETE_USER,
         })
-        console.log("Delete user "); 
+        console.log("signout user "); 
       }
     });
     // return unsubscribe();

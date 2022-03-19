@@ -1,8 +1,9 @@
-import './SearchTab.css';
+import './Search.css';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchItem from './SearchItem';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Results = [
   {
@@ -72,9 +73,16 @@ const Results = [
   },
 ]
 
-function SearchTab({ searchIconClick, closeSearchTab }) {
+function Search() {
+  const navigate = useNavigate();
   // keep track of current search input
   const [searchInput, setSearchInput] = useState("");
+
+  // close search page
+  const clickCloseSearch = () => {
+    setSearchInput("");
+    navigate(-1);
+  }
 
   // fetch results
   const handleSearch = (e) => {
@@ -85,36 +93,31 @@ function SearchTab({ searchIconClick, closeSearchTab }) {
   }
 
   return (
-    <div className={"fixed z-50 left-0 w-full h-full bg-white transition-all duration-500 delay-50 "
-      + (searchIconClick === true ? " top-0 " : " -top-full ")
-    }>
+    <div className="wrapper container p-4">
       <div className="w-full flex flex-col justify-center">
-        {/* Outer div for border */}
-        <div className="border-b border-gray-300">
-          {/* Search input & Close icon */}
-          <div className="container px-4 h-16 flex flex-row justify-between items-center gap-2 ">
-            <div className="w-full flex flex-row items-center border border-gray-300 rounded-3xl">
-              <button
-                onClick={handleSearch}
-                disabled={searchInput === "" ? true : false}
-              >
-                <SearchIcon className="custom-css-icon-search ml-4" />
-              </button>
-              <input className="flex-1 h-10 pl-4 py-2 rounded-3xl"
-                type="text"
-                value={searchInput}
-                placeholder="Search Items"
-                onChange={(e) => (setSearchInput(e.target.value))}
-                onKeyUp={(e) => (e.key === 'Enter' && searchInput !== "" && handleSearch(e))}
-              />
-            </div>
-            <CloseIcon onClick={() => { closeSearchTab(); setSearchInput(""); }} />
+        {/* Search input & Close icon */}
+        <div className="sticky top-0 flex flex-row justify-between items-center gap-2 ">
+          <div className="w-full flex flex-row items-center border-2 border-gray-400 rounded-3xl">
+            <button
+              onClick={handleSearch}
+              disabled={searchInput === "" ? true : false}
+            >
+              <SearchIcon className="ml-4 custom-css-icon-search" />
+            </button>
+            <input className="flex-1 h-10 pl-4 py-2 rounded-3xl"
+              type="text"
+              value={searchInput}
+              placeholder="Search Items"
+              onChange={(e) => (setSearchInput(e.target.value))}
+              onKeyUp={(e) => (e.key === 'Enter' && searchInput !== "" && handleSearch(e))}
+            />
           </div>
+          <CloseIcon className="text-gray-400 font-bold" onClick={clickCloseSearch} />
         </div>
 
         {/* Search results */}
-        <div className="container">
-          <ul className="custom-css-ul-height flex flex-col px-8 divide-y overflow-y-scroll">
+        <div>
+          <ul className="flex flex-col divide-y items-start">
             {Results.map(item => (
               <li key={item.id}>
                 < SearchItem
@@ -122,7 +125,7 @@ function SearchTab({ searchIconClick, closeSearchTab }) {
                   title={item.title}
                   tag={item.tag}
                   src={item.src}
-                  closeCart={closeSearchTab}
+                // closeCart={closeSearchTab}
                 />
               </li>
             ))}
@@ -133,4 +136,4 @@ function SearchTab({ searchIconClick, closeSearchTab }) {
   )
 }
 
-export default SearchTab
+export default Search

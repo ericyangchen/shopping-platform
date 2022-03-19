@@ -8,7 +8,7 @@ function ShoppingCartItem({ id, title, price, size, quantity, src, closeCart }) 
         onClick={closeCart}
       >
         <Link to={"/products/" + id}>
-          <img className="w-full object-contain rounded-md"
+          <img className="w-full object-contain rounded"
             src={src}
             alt={title}
           />

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import ProductItem from "../../components/product/ProductItem";
 
 const CategoryResult = {
-  'name': '新品到貨',
+  'name': 'Latest Items',
   'count': 67,
   'product': [
     {
@@ -116,17 +116,17 @@ function Category() {
 
 
   return (
-    <div className="container p-4">
+    <div className="wrapper container p-4">
       {/* Title & Count */}
-      <div className="my-4 flex flex-col justify-center items-center gap-2">
+      <div className="flex flex-col justify-center items-center gap-1">
         {/* Title */}
-        <h1 className="text-2xl font-bold text-center">{CategoryResult.name}</h1>
+        <span className="w-full text-xl font-bold text-center">{CategoryResult.name}</span>
         {/* Count */}
-        <h2 className="text-base font-medium text-center">{CategoryResult.count} products</h2>
+        <span className="w-full text-xs font-base text-right">{CategoryResult.count} products found</span>
       </div>
 
       {/* CategoryResult List */}
-      <div className="px-8 pt-4 lg:mt-16 lg:pt-16">
+      <div className="">
         <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-4 lg:gap-8 lg:mt-8">
           {CategoryResult.product.map(item => (
             <li key={item.id}>

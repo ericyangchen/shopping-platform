@@ -190,24 +190,34 @@ const MensWearList = [
   },
 ]
 
+
 function Home() {
+
+  // get firestore context
+
+
   return (
-    <div className="container p-4">
+    <div className="wrapper container p-4">
       {/* Home page main image */}
-      <div className="h-2/5 lg:h-2/3">
+      <div className="w-full max-h-64 md:max-h-128 overflow-hidden">
         <img
-          className="rounded-md h-full w-full object-cover lg:rounded-lg"
+          className=" w-full object-cover "
           src="images/home-back-img.webp"
           alt="home-back"
         />
       </div>
 
       {/* Latest Items */}
-      <div className="px-8 mt-8 pt-8 lg:mt-16 lg:pt-16">
-        <Link to="/new-arrivals">
-          <h1 className="text-center text-3xl font-bold lg:text-5xl">New Arrivals</h1>
-        </Link>
-        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-4 lg:gap-8 lg:mt-8">
+      <div className="py-8">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-xl font-bold">Latest Items</h1>
+          <div className="px-2">
+            <Link to="/category/new-arrivals">
+              <span className="text-sm text-gray-500">View more</span>
+            </Link>
+          </div>
+        </div>
+        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-5">
           {LatestItemsList.map(item => (
             <li key={item.id}>
               < ProductItem
@@ -223,11 +233,16 @@ function Home() {
       </div>
 
       {/* Mens Wear */}
-      <div className="px-8 mt-8 pt-8 lg:mt-16 lg:pt-16 border-gray-200 border-t">
-        <Link to="/men">
-          <h1 className="text-center text-3xl font-bold lg:text-5xl">Mens Wear</h1>
-        </Link>
-        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-4 lg:gap-8 lg:mt-8">
+      <div className="py-8 border-gray-200 border-t">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-xl font-bold">Mens Wear</h1>
+          <div className="px-2">
+            <Link to="/category/men">
+              <span className="text-sm text-gray-500">View more</span>
+            </Link>
+          </div>
+        </div>
+        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-5">
           {MensWearList.map(item => (
             <li key={item.id}>
               < ProductItem
@@ -243,11 +258,16 @@ function Home() {
       </div>
 
       {/* Womens Wear */}
-      <div className="px-8 mt-8 pt-8 lg:mt-16 lg:pt-16 border-gray-200 border-t">
-        <Link to="/women">
-          <h1 className="text-center text-3xl font-bold lg:text-5xl">Womens Wear</h1>
-        </Link>
-        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-4 lg:gap-8 lg:mt-8">
+      <div className="py-8 border-gray-200 border-t">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-xl font-bold">Womens Wear</h1>
+          <div className="px-2">
+            <Link to="/category/women">
+              <span className="text-sm text-gray-500">View more</span>
+            </Link>
+          </div>
+        </div>
+        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-5">
           {MensWearList.map(item => (
             <li key={item.id}>
               < ProductItem
@@ -262,6 +282,30 @@ function Home() {
         </ul>
       </div>
 
+      {/* Accessories */}
+      <div className="py-8 border-gray-200 border-t">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-xl font-bold">Accessories</h1>
+          <div className="px-2">
+            <Link to="/category/accessories">
+              <span className="text-sm text-gray-500">View more</span>
+            </Link>
+          </div>
+        </div>
+        <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-5">
+          {LatestItemsList.map(item => (
+            <li key={item.id}>
+              < ProductItem
+                id={item.id}
+                title={item.title}
+                price={item.price}
+                tag={item.tag}
+                src={item.src}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

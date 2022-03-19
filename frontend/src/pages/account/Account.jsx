@@ -32,11 +32,11 @@ function Account() {
   }, [path, navigate]);
 
   return (
-    <div className="container p-4">
+    <div className="wrapper container p-4">
       {/* Tabs */}
-      <div className="w-full mb-2 flex items-center gap-2 overflow-scroll text-center">
+      <div className="w-full mb-2 flex items-center gap-2 overflow-scroll text-center md:max-w-md">
         {Tabs.map(tab => (
-          <button className={"flex-1 p-1 text-sm rounded-3xl "
+          <button className={"flex-1 px-2 py-1 text-sm rounded-3xl "
             + (path === tab.path ? " bg-orange-500 text-white " : " bg-gray-300 text-black "
             )}
             key={tab.name}

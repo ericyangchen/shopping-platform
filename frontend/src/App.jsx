@@ -17,56 +17,62 @@ import Payment from './pages/account/Payment';
 import Login from './pages/account/Login';
 import Register from './pages/account/Register';
 import Checkout from './pages/checkout/Checkout';
+import Search from './pages/search/Search';
 
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        {/* Header */}
-        <Header />
-        <Routes>
-          {/* Home */}
-          <Route path="/" element={<Home />} />
+    <div className="h-screen">
+      <AuthProvider>
+        <Router>
+          {/* Header */}
+          <Header />
+          <Routes>
+            {/* Home */}
+            <Route path="/" element={<Home />} />
 
-          {/* Category */}
-          <Route path="/category/:category" element={<Category />} />
+            {/* Search */}
+            <Route path="/search" element={<Search />} />
 
-          {/* Product */}
-          <Route path="/products/:productId" element={<Product />} />
+            {/* Category */}
+            <Route path="/category/:category" element={<Category />} />
 
-          {/* (PrivateRoute: need Auth)*/}
-          <Route element={<PrivateRouteWrapper authState={true} redirectPath="/login" />} >
-            {/* Account */}
-            <Route path="/account" element={<Account />}>
-              {/* Overview */}
-              <Route index element={<OverView />} />
-              {/* Edit profile */}
-              <Route path="profile" element={<Profile />} />
-              {/* Order */}
-              <Route path="order" element={<Order />} />
-              {/* Payment */}
-              <Route path="payment" element={<Payment />} />
+            {/* Product */}
+            <Route path="/products/:productId" element={<Product />} />
+
+            {/* (PrivateRoute: need Auth)*/}
+            <Route element={<PrivateRouteWrapper authState={true} redirectPath="/login" />} >
+              {/* Account */}
+              <Route path="/account" element={<Account />}>
+                {/* Overview */}
+                <Route index element={<OverView />} />
+                {/* Edit profile */}
+                <Route path="profile" element={<Profile />} />
+                {/* Order */}
+                <Route path="order" element={<Order />} />
+                {/* Payment */}
+                <Route path="payment" element={<Payment />} />
+              </Route>
             </Route>
-          </Route>
 
-          {/* (PrivateRoute: need not Auth) */}
-          <Route element={<PrivateRouteWrapper authState={false} redirectPath="/account" />} >
-            {/* Login */}
-            <Route path="/login" element={<Login />} />
+            {/* (PrivateRoute: need not Auth) */}
+            <Route element={<PrivateRouteWrapper authState={false} redirectPath="/account" />} >
+              {/* Login */}
+              <Route path="/login" element={<Login />} />
 
-            {/* Register */}
-            <Route path="/register" element={<Register />} />
-          </Route>
+              {/* Register */}
+              <Route path="/register" element={<Register />} />
+            </Route>
 
-          {/* Checkout */}
-          <Route path="/checkout" element={<Checkout />} />
+            {/* Checkout */}
+            <Route path="/checkout" element={<Checkout />} />
 
-          {/* No match, redirect to Home */}
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router >
-    </AuthProvider >
+            {/* No match, redirect to Home */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router >
+      </AuthProvider >
+    </div>
   );
 }
 

@@ -8,7 +8,7 @@ const PrivateRouteWrapper = ({ authState, redirectPath }) => {
 
   // Require authState == true but user is not authenticated
   if (authState && !user) {
-    console.log("Account => redirect to Login (not auth)")
+    console.log("PrivateRouteWrapper Redirect: User is not authed")
     return (
       <Navigate
         to={redirectPath}
@@ -19,7 +19,7 @@ const PrivateRouteWrapper = ({ authState, redirectPath }) => {
   }
   // Require authState == false but user is authenticated
   else if (!authState && user) {
-    console.log("Login/Register => redirect to Account (authed)")
+    console.log("PrivateRouteWrapper Redirect: User is authed")
     return (
       <Navigate
         to={redirectPath}

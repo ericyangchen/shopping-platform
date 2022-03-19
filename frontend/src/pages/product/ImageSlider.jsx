@@ -10,7 +10,7 @@ function ImageSlider({ Item }) {
 
   // on window resize, go back to the first image 
   useLayoutEffect(() => {
-    function updateSize() {
+    const updateSize = () => {
       setcurrIndex(0);
       setOffset(0);
     }
@@ -40,14 +40,14 @@ function ImageSlider({ Item }) {
     // snap to img
     if (delta > 0 && currIndex < maxIndex) {
       // snap to +1 img
-      setDelta(0);
       setOffset(offset + imgWidth);
+      setDelta(0);
       setcurrIndex(currIndex + 1);
     }
     else if (delta < 0 && currIndex > 0) {
       // snap to -1 img
-      setDelta(0);
       setOffset(offset - imgWidth);
+      setDelta(0);
       setcurrIndex(currIndex - 1);
     }
     else {
@@ -65,7 +65,7 @@ function ImageSlider({ Item }) {
   return (
     <div className="flex flex-col gap-4 justify-center items-center">
       {/* Image outer div */}
-      <div className="w-full rounded-md overflow-hidden lg:w-1/2 lg:mx-auto"
+      <div className="w-full overflow-hidden"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}

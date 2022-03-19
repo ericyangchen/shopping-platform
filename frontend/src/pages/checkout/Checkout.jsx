@@ -69,7 +69,7 @@ function Checkout() {
   // fetch info
 
   return (
-    <div className="container p-4">
+    <div className="wrapper container p-4">
       <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-x-8 ">
         {/* Order Summary & Items */}
         <div className="flex flex-col justify-center items-center border border-gray-300 rounded lg:col-start-2 lg:row-start-1 lg:border-0 lg:justify-start ">
@@ -113,7 +113,7 @@ function Checkout() {
           {/* Shipping info */}
           <div className="flex flex-col justify-center items-center border border-gray-300 rounded ">
             {/* Shipping & close button */}
-            <div className="w-full flex flex-row justify-between items-center "
+            <div className="w-full flex flex-row justify-between items-center"
               onClick={() => (setShippingToggle(!shippingToggle))}
             >
               <h1 className="flex-1 p-4 text-lg font-bold">

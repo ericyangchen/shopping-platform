@@ -1,19 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+import { Badge } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import SideMenu from './SideMenu';
-import SearchTab from './searchTab/SearchTab';
 import ShoppingCart from './shoppingCart/ShoppingCart';
-
-import { useAuth } from '../../contexts/AuthContext';
 
 
 function Header() {
+  // const {}
+  const navigate = useNavigate();
 
   // Click open and close side menu (on mobile)
   const [menuClick, setMenuClick] = useState(false);
@@ -22,9 +22,8 @@ function Header() {
   }
 
   // Click open search tab
-  const [searchIconClick, setSearchIconClick] = useState(false);
   const handleSearchIconClick = () => {
-    setSearchIconClick(!searchIconClick);
+    navigate("/search");
   }
 
   // Click open shopping cart
@@ -34,24 +33,16 @@ function Header() {
   }
 
   // click account button
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const handleAccountClick = () => {
-    if (!user) {
-      navigate("login");
-    } else {
-      navigate("/account");
-    }
+    navigate("/account");
   }
 
   return (
-    <div className="border-b border-slate-100 bg-white sticky top-0 h-16 z-30">
+    <div className="border-b border-slate-100 bg-white fixed w-full top-0 h-16 z-30 ">
       <div className="container flex flex-row items-center h-full px-4">
         {/* hidden ecomponents */}
         {/* Side menu */}
         <SideMenu menuClick={menuClick} closeMenu={handleMenuClick} />
-        {/* Search tab */}
-        <SearchTab searchIconClick={searchIconClick} closeSearchTab={handleSearchIconClick} />
         {/* Shopping Cart Component */}
         <ShoppingCart cartClick={cartClick} closeCart={handleCartClick} />
 
@@ -86,10 +77,20 @@ function Header() {
           <PersonOutlineOutlinedIcon onClick={handleAccountClick} />
 
           {/* Shopping Bag button */}
-          <ShoppingBagOutlinedIcon onClick={handleCartClick} />
+          <Badge badgeContent={99} sx={{
+            "& .MuiBadge-badge": {
+              fontWeight: "500",
+              verticalAlign: "middle",
+              color: "black",
+              backgroundColor: "#f97316"
+            }
+          }}
+          >
+            <ShoppingBagOutlinedIcon onClick={handleCartClick} sx={{ color: 'black' }} />
+          </Badge>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

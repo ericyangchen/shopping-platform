@@ -12,6 +12,19 @@ code {
     monospace;
 }
 
+a,
+path,
+button {
+  cursor: pointer;
+}
+
+/* margin for container under Header */
+/* set margin top to avoid being covered by Header */
+.wrapper {
+  /* mt-16 */
+  margin-top: 4rem;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

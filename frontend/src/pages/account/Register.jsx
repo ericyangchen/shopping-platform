@@ -54,7 +54,7 @@ function Register() {
   // error message duration
   useEffect(() => {
     if (error !== "") {
-      let errorDisplayTimer = setTimeout(() => setError(""), 3000);
+      let errorDisplayTimer = setTimeout(() => setError(""), 2000);
       return () => {
         clearTimeout(errorDisplayTimer);
       };
@@ -63,87 +63,89 @@ function Register() {
 
 
   return (
-    <div className="container p-4 mt-4">
-      {/* Register form */}
-      <div className="flex flex-col justify-center items-center gap-8">
-        {/* Title */}
-        <h1 className="text-2xl font-bold">
-          Sign up
-        </h1>
-
-        {/* Register with email & password */}
-        <form className="w-full flex flex-col gap-4 ">
-          {/* Display error message */}
-          <div className={"w-full py-2 border-2 border-red-300 text-red-700 text-center font-semibold bg-red-200 rounded transition-all duration-150 delay-50 "
-            + (error === "" ? " h-0 overflow-hidden opacity-0 " : " opacity-1 ")
-          }>
-            {error}
-          </div>
-          {/* Email */}
-          <input className="w-full px-4 py-2 border border-gray-300 rounded "
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {/* Password */}
-          <input className="w-full px-4 py-2 border border-gray-300 rounded "
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          {/* Confirm Password */}
-          <input className="w-full px-4 py-2 border border-gray-300 rounded "
-            type="password"
-            placeholder="Confirm Password"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-          {/* Register button */}
-          <button className="w-full py-2 text-white font-bold bg-orange-500 rounded"
-            onClick={handleRegisterClick}
-            disabled={loading}
-          >
-            Register
-          </button>
-        </form>
-
-        {/* Register with other methods */}
-        <div className="w-full flex flex-col items-center gap-4">
-          {/* Or login with Text divider */}
-          <div className="w-4/5 flex flex-row justify-center items-center">
-            <div className="flex-1 border-t border-gray-300" />
-            <span className="mx-2 text-gray-400 text-sm ">
-              Or Signup with
-            </span>
-            <div className="flex-1 border-t border-gray-300" />
-          </div>
-
-          {/* Other registration methods */}
-          <div className="w-full py-2  bg-gray-200 text-center text-black rounded">
-            Google
-          </div>
-          <div className="w-full py-2 bg-gray-200 text-center text-black rounded">
-            Facebook
-          </div>
+    <div className="md:flex md:justify-center md:items-center md:h-screen">
+      <div className="wrapper container p-4 max-w-sm md:bg-gray-100 md:rounded-md">
+        {/* Display error message */}
+        <div className={"w-full py-2 border-2 border-red-300 text-red-700 text-center font-semibold bg-red-200 rounded transition-all duration-150 delay-50 "
+          + (error === "" ? " h-0 overflow-hidden opacity-0 border-0 py-0 " : " opacity-1 ")
+        }>
+          {error}
         </div>
-      </div >
+        {/* Register form */}
+        <div className="flex flex-col justify-center items-center gap-4">
+          {/* Title */}
+          <h1 className="mt-4 text-2xl font-bold">
+            Sign up
+          </h1>
 
-      {/* Signin account button */}
-      < div className="mt-16 text-center flex flex-col gap-4 justify-center items-center " >
-        {/* Sign Up */}
-        < h1 className="text-sm text-gray-400" >
-          Already have an account ?
-        </h1 >
-        <button className="w-full py-2 bg-black text-white text-lg font-bold rounded "
-          onClick={() => (navigate("/login"))}
-        >
-          Sign in
-        </button>
-      </div >
-    </div >
+          {/* Register with email & password */}
+          <form className="w-full flex flex-col gap-4 ">
 
+            {/* Email */}
+            <input className="w-full px-4 py-2 border border-gray-300 rounded "
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {/* Password */}
+            <input className="w-full px-4 py-2 border border-gray-300 rounded "
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {/* Confirm Password */}
+            <input className="w-full px-4 py-2 border border-gray-300 rounded "
+              type="password"
+              placeholder="Confirm Password"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+            {/* Register button */}
+            <button className="w-full py-2 text-white font-bold bg-orange-500 rounded"
+              onClick={handleRegisterClick}
+              disabled={loading}
+            >
+              Register
+            </button>
+          </form>
+
+          {/* Register with other methods */}
+          <div className="w-full flex flex-col items-center gap-4">
+            {/* Or login with Text divider */}
+            <div className="w-4/5 flex flex-row justify-center items-center">
+              <div className="flex-1 border-t border-gray-300" />
+              <span className="mx-2 text-gray-400 text-sm ">
+                Or Signup with
+              </span>
+              <div className="flex-1 border-t border-gray-300" />
+            </div>
+
+            {/* Other registration methods */}
+            <div className="w-full py-2  bg-gray-200 text-center text-black rounded">
+              Google
+            </div>
+            <div className="w-full py-2 bg-gray-200 text-center text-black rounded">
+              Facebook
+            </div>
+          </div>
+        </div >
+
+        {/* Signin account button */}
+        < div className="mt-8 text-center flex flex-col gap-4 justify-center items-center " >
+          {/* Sign Up */}
+          < h1 className="text-sm text-gray-400" >
+            Already have an account ?
+          </h1 >
+          <button className="w-full py-2 bg-black text-white text-lg font-bold rounded "
+            onClick={() => (navigate("/login"))}
+          >
+            Sign in
+          </button>
+        </div >
+      </div >
+    </div>
   )
 }
 
