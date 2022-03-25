@@ -2,74 +2,8 @@ import { Link } from 'react-router-dom';
 
 import CloseIcon from '@mui/icons-material/Close';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import CategoryNames from '../../constants/CategoryNames';
 
-const NavCategoryList = [
-  {
-    'id': '00000001',
-    'title': '新品',
-    'link': '/new-arrivals',
-  },
-  {
-    'id': '00000002',
-    'title': '男裝',
-    'link': '/men',
-  },
-  {
-    'id': '00000003',
-    'title': '女裝',
-    'link': '/women',
-  },
-  {
-    'id': '00000004',
-    'title': '男鞋',
-    'link': '/men-shoes',
-  },
-  {
-    'id': '00000005',
-    'title': '女鞋',
-    'link': '/women-shoes',
-  },
-  {
-    'id': '00000006',
-    'title': '飾品',
-    'link': '/accessories',
-  },
-  {
-    'id': '00000007',
-    'title': '特價1',
-    'link': '/on-sale',
-  },
-  {
-    'id': '00000008',
-    'title': '特價2',
-    'link': '/on-sale',
-  },
-  {
-    'id': '00000009',
-    'title': '特價3',
-    'link': '/on-sale',
-  },
-  // {
-  //   'id': '000000209',
-  //   'title': '特價4',
-  //   'link': '/on-sale',
-  // },
-  // {
-  //   'id': '0000002029',
-  //   'title': '特價5',
-  //   'link': '/on-sale',
-  // },
-  // {
-  //   'id': '0000d002029',
-  //   'title': '特價6',
-  //   'link': '/on-sale',
-  // },
-  // {
-  //   'id': '00000d02029',
-  //   'title': '特價7',
-  //   'link': '/on-sale',
-  // },
-]
 
 function SideMenu({ menuClick, closeMenu }) {
   return (
@@ -97,13 +31,13 @@ function SideMenu({ menuClick, closeMenu }) {
         {/* Category list */}
         <div className="container">
           <ul className="flex flex-col px-4 lg:px-0 lg:flex-row lg:gap-8">
-            {NavCategoryList.map(item => (
-              <Link to={"/category" + item.link} key={item.id}>
+            {Object.keys(CategoryNames).map((key, index) => (
+              <Link to={"/category/" + key} key={key + index}>
                 <div className="flex justify-between items-center hover:bg-slate-100 rounded-md"
                   onClick={closeMenu}
                 >
                   <li className="pl-4 py-4 font-medium lg:py-2 lg:px-2">
-                    {item.title}
+                    {CategoryNames[key]}
                   </li>
                   <button className="lg:hidden">
                     <NavigateNextIcon fontSize="small" />

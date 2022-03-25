@@ -1,147 +1,158 @@
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductItem from "../../components/product/ProductItem";
+import CircularProgress from '@mui/material/CircularProgress';
 
-const CategoryResult = {
-  'name': 'Latest Items',
-  'count': 67,
-  'product': [
-    {
-      'id': '00000001',
-      'title': 'NIKE COURT BOROUGH 大童款 全白',
-      'price': '1928',
-      'tag': [
-        {
-          'name': '預購',
-          'bg': 'bg-amber-400',
-          'color': 'text-black',
-        },
-      ],
-      'content': '尺寸還有22.5/23.5/24',
-      'src': [
-        '/images/products/p1-1.jpeg',
-        '/images/products/p1-2.jpeg',
-      ],
-    },
-    {
-      'id': '00000002',
-      'title': 'NEW BALANCE 5740',
-      'price': '3781',
-      'content': '奶茶配色 尺寸23-25有半號 實穿更好看✨',
-      'tag': [],
-      'src': [
-        '/images/products/p2-1.jpeg',
-        '/images/products/p2-2.jpeg',
-        '/images/products/p2-3.jpeg',
-      ],
-    },
-    {
-      'id': '00000003',
-      'title': 'NEW BALANCE 5740 新平衡 5740 超新平衡 測試用測試用測試用測試用',
-      'price': '3781',
-      'content': '海鹽配色 尺寸22.5-25',
-      'tag': [
-        {
-          'name': '新配色',
-          'bg': 'bg-amber-400',
-          'color': 'text-black',
-        },
-        {
-          'name': '現貨供應',
-          'bg': 'bg-sky-400',
-          'color': 'text-white',
-        },
-      ],
-      'src': [
-        '/images/products/p3-1.jpeg',
-        '/images/products/p3-2.jpeg',
-        '/images/products/p3-3.jpeg',
-        '/images/products/p3-4.jpeg',
-        '/images/products/p3-5.jpeg',
-      ],
-    },
-    {
-      'id': '00000004',
-      'title': 'NEW BALANCE 327 白絲綢',
-      'price': '3580',
-      'content': '終於趕上在今天補貨✨ 尺寸22.5-25.5 數量有限',
-      'tag': [],
-      'src': [
-        '/images/products/p4-1.jpeg',
-        '/images/products/p4-2.jpeg',
-        '/images/products/p4-3.jpeg',
-        '/images/products/p4-4.jpeg',
-      ],
-    },
-    {
-      'id': '00000005',
-      'title': 'CONVERSE 1970 黑色 低筒',
-      'price': '1790',
-      'content': '全尺寸22-29有半號 特賣時間 18: 00 - 20: 00 免運日最後一擋特賣不要錯過!!!!!!!!',
-      'tag': [
-        {
-          'name': '下週到貨',
-          'bg': 'bg-amber-400',
-          'color': 'text-black',
-        },
-      ],
-      'src': [
-        '/images/products/p5-1.jpeg',
-        '/images/products/p5-2.jpeg',
-        '/images/products/p5-3.jpeg',
-        '/images/products/p5-4.jpeg',
-        '/images/products/p5-5.jpeg',
-        '/images/products/p5-6.jpeg',
-      ],
-    },
-    {
-      'id': '00000006',
-      'title': 'NIKE WAFFLE TRAINER2',
-      'price': '2380',
-      'content': '黑底白勾 尺寸22-25有半號 版型建議正常',
-      'tag': [],
-      'src': [
-        '/images/products/p6-1.jpeg',
-        '/images/products/p6-2.jpeg',
-        '/images/products/p6-3.jpeg',
-      ],
-    },
-  ],
-}
-
-
+import { getFirstBatch, getNextBatch } from '../../services/Product';
+import CategoryNames from '../../constants/CategoryNames';
 
 function Category() {
-  // fetch 
   const { category } = useParams();
 
+  const [productList, setProductList] = useState([]);
+  const [lastVisible, setLastVisible] = useState("");
+  // control infinite scroll
+  const [loading, setLoading] = useState(false);
+  const [endOfProduct, setEndOfProduct] = useState(false);
+  const [pageNumber, setPageNumber] = useState(0);
+
+  // change to new category
+  useEffect(() => {
+    console.log("get first batch")
+    setLoading(false);
+    setEndOfProduct(false);
+    setPageNumber(1);
+
+    // firestore fetch data
+    getFirstBatch(category, 8, "createdAt", "desc")
+      .then((res) => {
+        if (res.products.length === 0) {
+          setEndOfProduct(true);
+        }
+        setProductList(res.products);
+        setLastVisible(res.lastVisible);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, [category]);
+
+
+  // fetch first batch
+  useEffect(() => {
+    setLoading(true);
+    setEndOfProduct(false);
+
+    console.log("c p")
+    if (pageNumber === 1) {
+      console.log("0")
+
+      getFirstBatch(category, 8, "createdAt", "desc")
+        .then((res) => {
+          if (res.products.length === 0) {
+            setEndOfProduct(true);
+          }
+          setProductList(res.products);
+          setLastVisible(res.lastVisible);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+    else {
+      console.log("1")
+      getNextBatch(category, 8, "createdAt", "desc", lastVisible)
+        .then((res) => {
+          if (res.products.length === 0) {
+            setEndOfProduct(true);
+          }
+          setProductList(prevProductList => ([...prevProductList, ...res.products]));
+          setLastVisible(res.lastVisible);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  }, [category, pageNumber]);
+
+  // observe scroll to bottom
+  const observer = useRef();
+  const lastProductRef = useCallback(node => {
+    // do nothing if is current loading
+    if (loading) return
+    // bottom element is visible
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !endOfProduct) {
+        setPageNumber(prevPageNumber => (prevPageNumber + 1));
+      }
+    })
+    if (node) observer.current.observe(node);
+  }, [loading, endOfProduct]);
 
   return (
     <div className="wrapper container p-4">
       {/* Title & Count */}
       <div className="flex flex-col justify-center items-center gap-1">
         {/* Title */}
-        <span className="w-full text-xl font-bold text-center">{CategoryResult.name}</span>
+        <span className="w-full text-xl font-bold text-center">{CategoryNames[category]}</span>
         {/* Count */}
-        <span className="w-full text-xs font-base text-right">{CategoryResult.count} products found</span>
+        <span className="w-full text-xs font-base text-right">{productList.length} products found</span>
       </div>
 
       {/* CategoryResult List */}
       <div className="">
         <ul className="grid grid-cols-2 gap-4 mt-4 lg:grid-cols-4 lg:gap-8 lg:mt-8">
-          {CategoryResult.product.map(item => (
-            <li key={item.id}>
-              < ProductItem
-                id={item.id}
-                title={item.title}
-                price={item.price}
-                tag={item.tag}
-                src={item.src}
-              />
-            </li>
-          ))}
+          {productList?.map((item, index) => {
+            // if last element, add a ref to it (for infinite scroll)
+            if (index === productList.length - 1) {
+              return (
+                <li ref={lastProductRef}
+                  key={item.id}
+                >
+                  < ProductItem
+                    id={item.id}
+                    sku={item.sku}
+                    brand={item.brand}
+                    title={item.title}
+                    price={item.price}
+                    originalPrice={item.originalPrice}
+                    description={item.description}
+                    tag={item.tag}
+                    size={item.size}
+                    src={'/images/products/p2-1.jpeg'}
+                  />
+                </li>
+              )
+            } else {
+              return (
+                <li key={item.id}>
+                  < ProductItem
+                    id={item.id}
+                    sku={item.sku}
+                    brand={item.brand}
+                    title={item.title}
+                    price={item.price}
+                    originalPrice={item.originalPrice}
+                    description={item.description}
+                    tag={item.tag}
+                    size={item.size}
+                    src={'/images/products/p2-1.jpeg'}
+                  />
+                </li>
+              )
+            }
+          })}
         </ul>
       </div>
 
+      {/* load more */}
+      <div className="text-center" hidden={!loading}>
+        <CircularProgress color="inherit" />
+      </div>
     </div>
   )
 }
